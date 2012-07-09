@@ -1,12 +1,12 @@
 angular.module('app.settings', [])
-   .value('$settings', {
-     title: 'VIDAL DM', 
-     custom_module: 'vidal',
+   .value('$settings', (localStorage.settings && JSON.parse(localStorage.settings)) || {
+     title: 'Title', 
+     custom_module: 'mName',
 
-     hostname: 'http://localhost:8088',
+     hostname: 'http://localhost',
 
-     search_service: '/rest/imd/packages?page-size=10&q={term}',
-     search_placeholder: 'Rechercher une référence',
+     search_service: '/rest/api/search?page-size=10&q={term}',
+     search_placeholder: 'Search my API',
 
      http_headers: {
       'Authorization': 'my-authorization-header'     

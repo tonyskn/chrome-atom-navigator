@@ -1,0 +1,90 @@
+<!doctype html>
+<html ng-app="options">
+
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <title>ATOM navigator options</title>
+  </head>
+
+  <body>
+     <div class="container" ng-controller="OptionsCtrl">
+        <p><h3>ATOM navigator options</h3></p>
+         <div class="alert alert-success" ng-show="ok">
+           <h4 class="alert-heading">Options saved!</h4>
+           <p></p>
+           <a href="/index.html">&larr; Go back</a>
+         </div>
+        <form ng-show="!ok" class="well" ng-submit="save_options()">
+           <div class="control-group">
+              <div class="control-group">
+                 <label>Main title</label>
+                 <input class="span8" type="text" name="title" ng-model="title" autofocus placeholder="My awesome API" class="input-xlarge"/>
+              </div>
+
+              <div class="control-group">
+                 <label>Custom module name</label>
+                 <input class="span8" type="text" name="custom_module" ng-model="custom_module" autofocus placeholder="mName" class="input-xlarge"/>
+              </div>
+
+              <div class="control-group">
+                 <label>Hostname</label>
+                 <input class="span8" type="text" name="hostname" ng-model="hostname" autofocus placeholder="http://my-host-name" class="input-xlarge"/>
+              </div>
+
+              <div class="control-group">
+                 <label>Main search service url</label>
+                 <input class="span8" type="text" name="search_service" ng-model="search_service" autofocus placeholder="/rest/api/search?page-size=10&q={term}" class="input-xlarge"/>
+                 <span class="help-block"><em>use {term} where you'd want to insert the query string</em></span>
+              </div>
+
+              <div class="control-group">
+                 <label>Search form placeholder</label>
+                 <input class="span8" type="text" name="search_placeholder" ng-model="search_placeholder" autofocus placeholder="Search my api..." class="input-xlarge"/>
+              </div>
+
+              <div class="control-group">
+                 <label>Custom HTTP headers</label>
+                 <textarea class="span8" rows="3" name="http_headers" ng-model="http_headers" autofocus placeholder="{'Authorization': 'my-authorization'}"></textarea>
+                 <span class="help-block"><em>Use JSON notation</em></span>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+           </div>
+        </form>
+     </div>
+     <script src="lib/angular.min.js"></script>
+     <script src="js/app.settings.js"></script>
+
+     <script>
+       angular.module('options', ['app.settings']);
+
+       function OptionsCtrl($scope, $settings) {
+         Object.keys($settings).forEach(function(key) {
+            if (typeof $settings[key] === "object") {
+               $scope[key] = JSON.stringify($settings[key]);
+            } else {
+               $scope[key] = $settings[key];
+            }
+         });
+
+         $scope.save_options = function() {
+            localStorage.settings = JSON.stringify({
+              title: $scope.title, 
+              custom_module: $scope.custom_module,
+
+              hostname: $scope.hostname,
+
+              search_service: $scope.search_service,
+              search_placeholder: $scope.search_placeholder,
+
+              http_headers: JSON.parse($scope.http_headers)
+            });
+
+            $scope.ok = true;
+         }
+       }
+     </script>
+  </body>
+</html>
+
