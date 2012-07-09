@@ -4,7 +4,7 @@ angular.module('app', ['app.filters', 'app.atom2json', 'app.settings'])
       $routeProvider.otherwise({controller:FeedCtrl, templateUrl:'partial/feed.html'});
    });
 
-function FormCtrl($scope, $location, $settings) {
+function MainCtrl($scope, $location, $settings) {
    document.title = $scope.title = $settings.title;
    $scope.placeholder = $settings.search_placeholder; 
 
@@ -34,7 +34,8 @@ function FeedCtrl($scope, $location, $atom2json, $http, $settings) {
                   current: os.startIndex,
                   results: os.totalResults,
                   total: 1^os.totalResults/os.itemsPerPage,
-                  offset: (os.startIndex-1) * os.itemsPerPage
+                  offset: (os.startIndex-1) * os.itemsPerPage,
+                  perpage: os.itemsPerPage
                };
             } 
          })

@@ -6,9 +6,14 @@
    },
    "options_page": "options.html",
    "description": "ATOM navigator for Chrome with support for opensearch, custom modules...",
+   "icons": {
+      "128": "img/128.png",
+      "24": "img/24.png",
+      "16": "img/16.png"
+   },
    "permissions": [ "unlimitedStorage" ],
-   "name": "Awesome ATOM navigator",
+   "name": "Awesome ATOM Navigator",
    "update_url": "http://clients2.google.com/service/update2/crx",
-   "version": "0.1"
+   "version": "1.2"
 }
 

@@ -49,12 +49,13 @@
   </head>
 
   <body>
-     <div class="container">
+     <div class="container" ng-controller="MainCtrl">
         <p></p>
-        <form class="well form-search" ng-submit="search()" ng-controller="FormCtrl">
+        <form class="well form-search" ng-submit="search()" ng-show="title">
+           <p><h4>{{title}}</h4> <a href="options.html">Options</a></p>
            <div class="control-group">
               <h6>{{placeholder}}:</h6>
-              <input type="text" name="query" ng-model="query" autofocus placeholder="{{placeholder}}..." class="input-xlarge search-query"/>
+              <input class="span5" type="text" name="query" ng-model="query" autofocus placeholder="{{placeholder}}..." class="input-xlarge search-query"/>
               <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i></button>
            </div>
         </form>
