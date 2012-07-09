@@ -1,5 +1,3 @@
-inlines
-parameters (search url, headers)
 generate modules dynamically
 
 package for chrome

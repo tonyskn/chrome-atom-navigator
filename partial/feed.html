@@ -11,7 +11,7 @@
 
    <p>Updated: <em>{{feed.updated | date}}</em></p>
 
-   <a target="_blank" href="http://localhost:8088{{feed._links.self[0].attr('href')}}">
+   <a target="_blank" href="{{hostname + feed._links.self[0].attr('href')}}">
       <em>&rarr; view source</em>
    </a>
    <hr/>

@@ -36,6 +36,7 @@
          'lib/angular.min.js',
          'js/app.filters.js',
          'js/app.atom2json.js',
+         'js/app.settings.js',
          'js/app.js'
        ], function() {
          // when all is done, execute bootstrap angular application
@@ -49,11 +50,11 @@
 
   <body>
      <div class="container">
-        <p> </p>
-
+        <p></p>
         <form class="well form-search" ng-submit="search()" ng-controller="FormCtrl">
            <div class="control-group">
-              <input type="text" ng-model="query" autofocus placeholder="{{placeholder}}" class="input-xlarge search-query"/>
+              <h6>{{placeholder}}:</h6>
+              <input type="text" name="query" ng-model="query" autofocus placeholder="{{placeholder}}..." class="input-xlarge search-query"/>
               <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i></button>
            </div>
         </form>

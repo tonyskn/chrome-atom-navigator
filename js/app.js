@@ -1,24 +1,26 @@
-angular.module('app', ['app.filters', 'app.atom2json'])
+angular.module('app', ['app.filters', 'app.atom2json', 'app.settings'])
    .config(function($routeProvider, $locationProvider) {
       $locationProvider.hashPrefix('!');
       $routeProvider.otherwise({controller:FeedCtrl, templateUrl:'partial/feed.html'});
    });
 
-function FormCtrl($scope, $location) {
-   document.title = $scope.placeholder = "Rechercher une référence...";
+function FormCtrl($scope, $location, $settings) {
+   document.title = $scope.title = $settings.title;
+   $scope.placeholder = $settings.search_placeholder;
 
    $scope.search = function() {
-      $location.url("/rest/imd/products?q="+$scope.query);
+      $location.url( $settings.search_service.replace('{term}', $scope.query) );
    };
 
    $scope.$watch(function() { return $location.search(); },
                  function(querystring) { $scope.query = querystring.q; });
 }
 
-function FeedCtrl($scope, $location, $atom2json, $http) {
+function FeedCtrl($scope, $location, $atom2json, $http, $settings) {
    if ($location.url() !== "") {
-      var link = "http://localhost:8088"+$location.url();
+      var link = $settings.hostname+$location.url();
 
+      $scope.hostname = $settings.hostname;
       $scope.loading="true";
 
       $http.get(link)
