@@ -1,0 +1,8 @@
+inlines
+parameters (search url, headers)
+generate modules dynamically
+
+package for chrome
+
+fix attributes for simple nodes
+add contributors

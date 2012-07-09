@@ -1,0 +1,68 @@
+<div class="alert alert-error" ng-show="err"><strong>{{err.msg}}: </strong>{{err.url}}</div>
+
+<div class="alert" ng-show="loading">Loading...</div>
+
+<div ng-show="feed">
+   <h3>
+      <a href="#!{{feed._links.self[0].attr('href')}}">
+         {{feed.title}}
+      </a>
+   </h3>
+
+   <p>Updated: <em>{{feed.updated | date}}</em></p>
+
+   <a target="_blank" href="http://localhost:8088{{feed._links.self[0].attr('href')}}">
+      <em>&rarr; view source</em>
+   </a>
+   <hr/>
+</div>
+
+<div class="hidden-phone" ng-show="opensearch">
+   <ul class="pager">
+      <li class="previous" ng-show="feed._links.prev">
+         <a href="#!{{feed._links.prev[0].attr('href')}}">&larr; Previous</a>
+      </li>
+      <li>
+         <em>{{opensearch.results}} results - Page {{opensearch.current}} / {{opensearch.total}}</em>
+      </li>
+      <li class="next" ng-show="feed._links.next">
+         <a href="#!{{feed._links.next[0].attr('href')}}">Next &rarr;</a>
+      </li>
+   </ul>
+   <hr/>
+</div>
+
+<div ng-show="feed">
+   <div ng-repeat="entry in feed.entry">
+     <div class="row">
+        <div class="span5">
+           <h4>
+              {{opensearch.offset + $index +1}}.
+              <span class="label label-info">{{entry.category.attr('term')}}</span>
+              <a href="#!{{entry._links.alternate[0].attr('href')}}">{{entry.title}}</a>
+           </h4>
+   
+           <p/>
+           <p>Author: <em>{{entry.author.name}}</em></p>
+           <p ng-show="entry.summary">Description: <em>{{entry.summary}}</em></p>
+   
+           <div class="btn-toolbar">
+              <div ng-repeat="link in entry._links.related" class="btn-group">
+                 <a class="btn" href="#!{{link.attr('href')}}">{{link.attr('title')}}</a>
+              </div>
+           </div> 
+        </div>
+        <div class="span7 hidden-phone">
+           <table class="table table-condensed table-striped">
+              <tbody>
+                 <tr ng-repeat="(key, value) in entry._modules.vidal">
+                    <td class="span3">{{key | capitalize}}</td>
+                    <td class="span4"><em>{{value}}</em></td>
+                 </tr>
+              </tbody>
+           </table>
+        </div>
+     </div>
+     <hr/>
+   </div>
+</div>
