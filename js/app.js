@@ -1,5 +1,5 @@
 angular.module('app', ['app.filters', 'app.atom2json', 'app.settings'])
-   .config(function($routeProvider, $locationProvider) {
+   .config(function($routeProvider, $locationProvider, $httpProvider) {
       $locationProvider.hashPrefix('!');
       $routeProvider.otherwise({controller:FeedCtrl, templateUrl:'partial/feed.html'});
    });
@@ -21,7 +21,7 @@ function FeedCtrl($scope, $location, $atom2json, $http, $settings) {
       $scope.settings = $settings;
       $scope.loading="true";
 
-      $http.get( $settings.hostname+$location.url() )
+      $http.get( $settings.hostname+$location.url(), {headers: $settings.http_headers} )
          .success( function(data) { 
             delete $scope.loading;
 
