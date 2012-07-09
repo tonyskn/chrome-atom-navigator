@@ -1,0 +1,12 @@
+{
+   "app": {
+      "launch": {
+         "local_path": "index.html"
+      }
+   },
+   "description": "ATOM navigator for Chrome with support for opensearch, custom modules...",
+   "name": "Awesome ATOM navigator",
+   "update_url": "http://clients2.google.com/service/update2/crx",
+   "version": "0.1.2.3"
+}
+
