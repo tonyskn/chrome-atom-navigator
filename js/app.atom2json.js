@@ -7,15 +7,6 @@ angular.module('app.atom2json', []).factory("$atom2json", function() {
       var obj = Object.create({
          attr: function(attrName) {
            return this._attributes && this._attributes[attrName]; 
-         },
-         module: function(mName) {
-            var self = this;
-            return Object.keys(this).sort().reduce(function(acc, key) {
-               if ( key.indexOf(mName+":") === 0 ) {
-                  acc[key.substr(key.indexOf(":")+1)] = self[key];
-               }
-               return acc;
-            }, {});
          }
       });
 
@@ -48,28 +39,38 @@ angular.module('app.atom2json', []).factory("$atom2json", function() {
          }
       }
 
-      //
-      // post processing
-      //
       if (typeof obj.entry !== "undefined") {
          obj.entry = [].concat(obj.entry);
       }
 
-      // pre-initialize known modules
-      obj._modules = ['opensearch', 'vidal'].reduce(function (modules, mName) {
-         modules[mName] = obj.module(mName);
+      // pre-initialize modules
+      obj._modules = Object.keys(obj).reduce(function(modules, key) {
+         if (key.indexOf(":") > 0) {
+            var mName = key.replace( /:.*$/, '' );
+            var mKey = key.replace( /^.*:/, '' );
+
+            modules[mName] = modules[mName] || {};
+            modules[mName][mKey] = obj[key];
+
+            delete obj[key];
+         }   
+
          return modules;
       }, {});
 
       // pre-group links by rel type
-      obj._links = ['next', 'prev', 'alternate', 'self', 'related', 'inline'].reduce(function(links, type) {
-         var linkType = obj.link && [].concat(obj.link).filter(function(ln) {
-            return ln.attr('rel') === type;
-         });
+      if (typeof obj.link !== "undefined") {
+         obj._links = obj.link && [].concat(obj.link).reduce(function(links, ln) {
+            var type = ln.attr('rel');   
+   
+            links[type] = links[type] || [];
+            links[type].push( ln );
+   
+            return links;
+         }, {});
 
-         if (typeof linkType !== "undefined") { links[type] = linkType; }
-         return links;
-      }, {});
+         delete obj.link;
+      }
 
       return obj;
    };

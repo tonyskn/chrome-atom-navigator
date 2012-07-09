@@ -6,7 +6,7 @@ angular.module('app', ['app.filters', 'app.atom2json', 'app.settings'])
 
 function FormCtrl($scope, $location, $settings) {
    document.title = $scope.title = $settings.title;
-   $scope.placeholder = $settings.search_placeholder;
+   $scope.placeholder = $settings.search_placeholder; 
 
    $scope.search = function() {
       $location.url( $settings.search_service.replace('{term}', $scope.query) );
@@ -18,19 +18,17 @@ function FormCtrl($scope, $location, $settings) {
 
 function FeedCtrl($scope, $location, $atom2json, $http, $settings) {
    if ($location.url() !== "") {
-      var link = $settings.hostname+$location.url();
-
-      $scope.hostname = $settings.hostname;
+      $scope.settings = $settings;
       $scope.loading="true";
 
-      $http.get(link)
+      $http.get( $settings.hostname+$location.url() )
          .success( function(data) { 
             delete $scope.loading;
 
             $scope.feed = $atom2json(data).feed;
             document.title = $scope.feed.title;
 
-            if ($scope.feed._modules.opensearch.startIndex) {
+            if (typeof $scope.feed._modules.opensearch !== "undefined") {
                var os = $scope.feed._modules.opensearch;
                $scope.opensearch = {
                   current: os.startIndex,
@@ -46,7 +44,7 @@ function FeedCtrl($scope, $location, $atom2json, $http, $settings) {
             document.title = "Euh...";
 
             $scope.err = {
-               msg: (status === 404) ?  "Not found" : "Unexpected error",
+               msg: {'404': 'Not found', '403': 'Forbidden'}[''+status] || "Unexpected error",
                url: $location.url()
             };
          } );

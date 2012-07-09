@@ -11,7 +11,7 @@
 
    <p>Updated: <em>{{feed.updated | date}}</em></p>
 
-   <a target="_blank" href="{{hostname + feed._links.self[0].attr('href')}}">
+   <a target="_blank" href="{{settings.hostname + feed._links.self[0].attr('href')}}">
       <em>&rarr; view source</em>
    </a>
    <hr/>
@@ -55,7 +55,7 @@
         <div class="span7 hidden-phone">
            <table class="table table-condensed table-striped">
               <tbody>
-                 <tr ng-repeat="(key, value) in entry._modules.vidal">
+                 <tr ng-repeat="(key, value) in entry._modules[settings.custom_module]">
                     <td class="span3">{{key | capitalize}}</td>
                     <td class="span4"><em>{{value}}</em></td>
                  </tr>
