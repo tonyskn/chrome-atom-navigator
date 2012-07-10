@@ -72,9 +72,14 @@
            </div> 
         </div>
         <div class="span7 hidden-phone">
-           <table class="table table-condensed table-striped">
+           <table class="table table-condensed table-striped" ng-repeat="(mName, module) in entry._modules">
+              <thead>
+                 <tr>
+                    <th colspan="2"><h6>{{mName}} module</h6></th>
+                 </tr>
+              </thead>
               <tbody>
-                 <tr ng-repeat="(key, value) in entry._modules[settings.custom_module]">
+                 <tr ng-repeat="(key, value) in module">
                     <td class="span3">{{key | capitalize}}</td>
                     <td class="span4"><em>{{value}}</em></td>
                  </tr>

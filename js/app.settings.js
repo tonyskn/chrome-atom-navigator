@@ -1,7 +1,6 @@
 angular.module('app.settings', [])
    .value('$settings', (localStorage.settings && JSON.parse(localStorage.settings)) || {
      title: 'Title', 
-     custom_module: 'mName',
 
      hostname: 'http://localhost',
 

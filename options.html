@@ -25,11 +25,6 @@
               </div>
 
               <div class="control-group">
-                 <label>Custom module name</label>
-                 <input class="span8" type="text" name="custom_module" ng-model="custom_module" autofocus placeholder="mName" class="input-xlarge"/>
-              </div>
-
-              <div class="control-group">
                  <label>Hostname</label>
                  <input class="span8" type="text" name="hostname" ng-model="hostname" autofocus placeholder="http://my-host-name" class="input-xlarge"/>
               </div>
@@ -74,7 +69,6 @@
          $scope.save_options = function() {
             localStorage.settings = JSON.stringify({
               title: $scope.title, 
-              custom_module: $scope.custom_module,
 
               hostname: $scope.hostname,
 
