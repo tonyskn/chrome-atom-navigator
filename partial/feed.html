@@ -14,25 +14,44 @@
    <a target="_blank" href="{{settings.hostname + feed._links.self[0].attr('href')}}">
       <em>&rarr; view source</em>
    </a>
-   <hr/>
 </div>
 
 <div class="hidden-phone" ng-show="opensearch">
+   <hr/>
    <ul class="pager">
       <li class="previous" ng-show="feed._links.prev">
          <a href="#!{{feed._links.prev[0].attr('href')}}">&larr; Previous</a>
       </li>
       <li>
-      <em>{{opensearch.results}} results - {{opensearch.perpage}} items per page - Page {{opensearch.current}} / {{opensearch.total}}</em>
+         <button ng-show="tableview" class="btn btn-mini" ng-click="toggleView()">view details</button>
+         <button ng-show="!tableview" class="btn btn-mini" ng-click="toggleView()">view summary</button>
+         <em>{{opensearch.results}} results - {{opensearch.perpage}} items per page - Page {{opensearch.current}} / {{opensearch.total}}</em>
       </li>
       <li class="next" ng-show="feed._links.next">
          <a href="#!{{feed._links.next[0].attr('href')}}">Next &rarr;</a>
       </li>
    </ul>
-   <hr/>
 </div>
 
-<div ng-show="feed">
+<div ng-show="feed && tableview && opensearch">
+   <table ng-show="feed.entry.length > 0" class="table table-condensed table-bordered table-striped">
+      <thead>
+         <tr>
+            <th>ID</th>
+            <th>Title</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr ng-repeat="entry in feed.entry">
+            <td class="span2">{{entry.id | feedid}}</td>
+            <td class="span8"><a href="#!{{entry._links.alternate[0].attr('href')}}">{{entry.title}}</a></td>
+         </tr>
+      </tbody>
+   </table>
+</div>
+
+<div ng-show="feed && (!tableview || !opensearch)">
+   <hr/>
    <div ng-repeat="entry in feed.entry">
      <div class="row">
         <div class="span5">

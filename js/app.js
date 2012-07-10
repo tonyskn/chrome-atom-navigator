@@ -16,7 +16,11 @@ function MainCtrl($scope, $location, $settings) {
                  function(querystring) { $scope.query = querystring.q; });
 }
 
-function FeedCtrl($scope, $location, $atom2json, $http, $settings) {
+function FeedCtrl($rootScope, $scope, $location, $atom2json, $http, $settings) {
+   $scope.toggleView = function() {
+      $rootScope.tableview = !$rootScope.tableview;
+   };
+
    if ($location.url() !== "") {
       $scope.settings = $settings;
       $scope.loading="true";
