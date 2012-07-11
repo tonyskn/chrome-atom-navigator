@@ -11,9 +11,16 @@
 
    <p>Updated: <em>{{feed.updated | date}}</em></p>
 
-   <a target="_blank" href="{{settings.hostname + feed._links.self[0].attr('href')}}">
-      <em>&rarr; view source</em>
+   <a ng-show="!srcview" class="btn btn-mini" ng-click="toggleSrcView() && prettyPrint();">
+      <i class="icon-circle-arrow-right"></i>
+      <em>view source</em>
    </a>
+   <a ng-show="srcview" class="btn btn-mini" ng-click="toggleSrcView() && prettyPrint();">
+      <i class="icon-circle-arrow-down"></i>
+      <em>hide source</em>
+   </a>
+
+   <p><pre ng-show="srcview" class="prettyprint pre-scrollable" ng-show="xml">{{xml}}</pre></p>
 </div>
 
 <div class="hidden-phone" ng-show="opensearch">
@@ -23,8 +30,8 @@
          <a href="#!{{feed._links.prev[0].attr('href')}}">&larr; Previous</a>
       </li>
       <li>
-         <button ng-show="tableview" class="btn btn-mini" ng-click="toggleView()">view details</button>
-         <button ng-show="!tableview" class="btn btn-mini" ng-click="toggleView()">view summary</button>
+         <button ng-show="tableview" class="btn btn-mini" ng-click="toggleTableView()">view details</button>
+         <button ng-show="!tableview" class="btn btn-mini" ng-click="toggleTableView()">view summary</button>
          <em>{{opensearch.results}} results - {{opensearch.perpage}} items per page - Page {{opensearch.current}} / {{opensearch.total}}</em>
       </li>
       <li class="next" ng-show="feed._links.next">

@@ -17,9 +17,15 @@ function MainCtrl($scope, $location, $settings) {
 }
 
 function FeedCtrl($rootScope, $scope, $location, $atom2json, $http, $settings) {
-   $scope.toggleView = function() {
+   $scope.toggleTableView = function() {
       $rootScope.tableview = !$rootScope.tableview;
    };
+
+   $scope.toggleSrcView = function() {
+      return $scope.srcview = !$scope.srcview;
+   };
+
+   $scope.prettyPrint = prettyPrint;
 
    if ($location.url() !== "") {
       $scope.settings = $settings;
@@ -29,6 +35,7 @@ function FeedCtrl($rootScope, $scope, $location, $atom2json, $http, $settings) {
          .success( function(data) { 
             delete $scope.loading;
 
+            $scope.xml = data;
             $scope.feed = $atom2json(data).feed;
             document.title = $scope.feed.title;
 
