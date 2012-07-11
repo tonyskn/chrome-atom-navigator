@@ -33,11 +33,12 @@ function FeedCtrl($rootScope, $scope, $location, $atom2json, $http, $settings) {
             document.title = $scope.feed.title;
 
             if (typeof $scope.feed._modules.opensearch !== "undefined") {
-               var os = $scope.feed._modules.opensearch;
+               var os = $scope.feed._modules.opensearch,
+                   total = os.totalResults / os.itemsPerPage;
                $scope.opensearch = {
                   current: os.startIndex,
                   results: os.totalResults,
-                  total: 1^os.totalResults/os.itemsPerPage,
+                  total: Math.floor(total) === total ? total : Math.floor(total) + 1,
                   offset: (os.startIndex-1) * os.itemsPerPage,
                   perpage: os.itemsPerPage
                };
