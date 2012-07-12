@@ -18,7 +18,7 @@ function MainCtrl($scope, $location, $settings) {
 
 function FeedCtrl($rootScope, $scope, $location, $atom2json, $http, $settings) {
    $scope.toggleTableView = function() {
-      $rootScope.tableview = !$rootScope.tableview;
+      $rootScope.tableview = (typeof $rootScope.tableview === "undefined") ? true : !$rootScope.tableview;
    };
 
    $scope.toggleSrcView = function() {
@@ -28,7 +28,6 @@ function FeedCtrl($rootScope, $scope, $location, $atom2json, $http, $settings) {
    $scope.prettyPrint = prettyPrint;
 
    if ($location.url() !== "") {
-      $scope.settings = $settings;
       $scope.loading="true";
 
       $http.get( $settings.hostname+$location.url(), {headers: $settings.http_headers} )
