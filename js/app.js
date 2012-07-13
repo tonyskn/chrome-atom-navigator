@@ -25,7 +25,12 @@ function FeedCtrl($rootScope, $scope, $location, $atom2json, $http, $settings) {
       return $scope.srcview = !$scope.srcview;
    };
 
-   $scope.prettyPrint = prettyPrint;
+   $scope.prettyPrint = function() {
+      if (typeof $scope._prettyPrint === "undefined") {
+         $scope._prettyPrint = true;
+         prettyPrint();
+      }
+   };
 
    if ($location.url() !== "") {
       $scope.loading="true";
