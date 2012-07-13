@@ -17,13 +17,9 @@ function MainCtrl($scope, $location, $settings) {
 }
 
 function FeedCtrl($rootScope, $scope, $location, $atom2json, $http, $settings) {
-   $scope.toggleTableView = function() {
-      $rootScope.tableview = (typeof $rootScope.tableview === "undefined") ? true : !$rootScope.tableview;
-   };
+   $scope.toggleDetailView = function() { $scope.detailview = !$scope.detailview; };
 
-   $scope.toggleSrcView = function() {
-      return $scope.srcview = !$scope.srcview;
-   };
+   $scope.toggleSrcView = function() { return $scope.srcview = !$scope.srcview; };
 
    $scope.prettyPrint = function() {
       if (typeof $scope._prettyPrint === "undefined") {
