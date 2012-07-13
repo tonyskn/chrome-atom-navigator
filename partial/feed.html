@@ -74,7 +74,8 @@
    
            <div class="btn-toolbar">
               <div ng-repeat="link in entry._links.related" class="btn-group">
-                 <a class="btn" href="#!{{link.attr('href')}}">{{link.attr('title')}}</a>
+                 <a ng-show="link.external" target="_blank" class="btn" href="{{link.attr('href')}}">{{link.attr('title')}}</a>
+                 <a ng-show="!link.external" class="btn" href="#!{{link.attr('href')}}">{{link.attr('title')}}</a>
               </div>
            </div> 
         </div>

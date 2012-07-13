@@ -61,8 +61,10 @@ angular.module('app.atom2json', []).factory("$atom2json", function() {
       // pre-group links by rel type
       if (typeof obj.link !== "undefined") {
          obj._links = [].concat(obj.link).reduce(function(links, ln) {
-            var type = ln.attr('rel');   
+            var type = ln.attr('rel'),
+                external = ln.attr('href') && ln.attr('href').match(/^http/);
    
+            ln.external = !!external;
             links[type] = links[type] || [];
             links[type].push( ln );
    
