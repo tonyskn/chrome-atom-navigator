@@ -26,7 +26,7 @@ angular.module('app.atom2json', []).factory("$atom2json", function() {
          for (var i = 0; i < xml.childNodes.length; i++) {
             var item = xml.childNodes.item(i), nodeName = item.nodeName;
 
-            if (item.nodeType !== 3) {
+            if (item.nodeType !== 3 && (item.childNodes.length > 0 || item.attributes.length > 0)) {
                if (item.childNodes.length === 1 && item.childNodes.item(0).nodeType === 3) {
                   obj[nodeName] = item.childNodes.item(0).nodeValue;
                } else if (typeof obj[nodeName] === "undefined") {
@@ -38,6 +38,8 @@ angular.module('app.atom2json', []).factory("$atom2json", function() {
             }
          }
       }
+
+      // post-process
 
       if (typeof obj.entry !== "undefined") {
          obj.entry = [].concat(obj.entry);
@@ -57,7 +59,7 @@ angular.module('app.atom2json', []).factory("$atom2json", function() {
 
          return modules;
       }, {});
-
+      
       // pre-group links by rel type
       if (typeof obj.link !== "undefined") {
          obj._links = [].concat(obj.link).reduce(function(links, ln) {

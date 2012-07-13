@@ -4,9 +4,7 @@
 
 <div ng-show="feed">
    <h3>
-      <a href="#!{{feed._links.self[0].attr('href')}}">
-         {{feed.title}}
-      </a>
+      <a ng-show="feed.title" href="#!{{feed._links.self[0].attr('href')}}">{{feed.title}}</a>
    </h3>
 
    <p>Updated: <em>{{feed.updated | date}}</em></p>
@@ -65,7 +63,8 @@
            <h4>
               {{opensearch.offset + $index +1}}.
               <span class="label label-info">{{entry.category.attr('term')}}</span>
-              <a href="#!{{entry._links.alternate[0].attr('href')}}">{{entry.title}}</a>
+              <a ng-show="entry._links.alternate" href="#!{{entry._links.alternate[0].attr('href')}}" ng-bind-html-unsafe="entry.title"></a>
+              <span ng-show="!entry._links.alternate" ng-bind-html-unsafe="entry.title"></span>
            </h4>
    
            <p/>

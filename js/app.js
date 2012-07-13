@@ -37,7 +37,7 @@ function FeedCtrl($rootScope, $scope, $location, $atom2json, $http, $settings) {
 
             $scope.xml = data;
             $scope.feed = $atom2json(data).feed;
-            document.title = $scope.feed.title;
+            document.title = $scope.feed.title || $settings.title;
 
             if (typeof $scope.feed._modules.opensearch !== "undefined") {
                var os = $scope.feed._modules.opensearch,
