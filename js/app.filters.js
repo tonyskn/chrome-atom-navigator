@@ -6,6 +6,6 @@ angular.module('app.filters', [])
    })
    .filter('feedid', function() {
       return function(input) {
-         return input.match( /\/([0-9]+)$/ )[1];
+         return input && input.match( /\/([0-9]+)$/ )[1];
       };
    });
